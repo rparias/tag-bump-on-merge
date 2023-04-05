@@ -1,1 +1,1 @@
-console.log('hello: minor');
+console.log('hello: major');
