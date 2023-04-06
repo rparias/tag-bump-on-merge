@@ -18,7 +18,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          target-branch: 'main'
+          # target-branch: 'main'
           tag-prefix:  'v'
       # - name: Get package version
       #   run: |
