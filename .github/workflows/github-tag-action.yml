@@ -12,24 +12,25 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: '0'
+        # with:
+        #   ref: ${{ github.sha }}
+        #   fetch-depth: '0'
       - name:  'Automated Version Bump'
         uses:  'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           target-branch: 'main'
-      - name: Get package version
-        run: |
-          PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          echo "Package version is $PACKAGE_VERSION"
-        env:
-          PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.61.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          CUSTOM_TAG: "$PACKAGE_VERSION"
+          tag-prefix:  'v'
+      # - name: Get package version
+      #   run: |
+      #     PACKAGE_VERSION=$(node -p "require('./package.json').version")
+      #     echo "Package version is $PACKAGE_VERSION"
+      #   env:
+      #     PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
+      # - name: Bump version and push tag
+      #   uses: anothrNick/github-tag-action@1.61.0
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     WITH_V: true
+      #     CUSTOM_TAG: "$PACKAGE_VERSION"
