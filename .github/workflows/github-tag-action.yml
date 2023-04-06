@@ -12,14 +12,38 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-      - name:  'Automated Version Bump'
-        uses:  'phips28/gh-action-bump-version@master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          target-branch: 'main'
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
+          ref: ${{ github.sha }}
+          fetch-depth: '0'
+      - name: 'Update package version major'
+        run: npm version major
+        if: contains(github.event.head_commit.message, '#major')
+      - name: 'Update package version patch'
+        run: npm version patch
+        if: contains(github.event.head_commit.message, '#patch')
+      - name: 'Update package version minor'
+        run: npm version minor
+        if: contains(github.event.head_commit.message, '#minor')  || (!contains(github.event.head_commit.message, '#major') && !contains(github.event.head_commit.message, '#patch'))
+      - name: Get package version
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          echo "Package version is $PACKAGE_VERSION"
+        env:
+          PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
+      # - name: Bump version and push tag
+      #   uses: anothrNick/github-tag-action@1.61.0
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     WITH_V: true
+      #     CUSTOM_TAG: ${{ env.PACKAGE_VERSION }}
+      # - name:  'Automated Version Bump'
+      #   uses:  'phips28/gh-action-bump-version@master'
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     target-branch: 'main'
+      # - name: Create a GitHub release
+      #   uses: ncipollo/release-action@v1
       # - name: Bump version and push tag
       #   id: tag_version
       #   uses: mathieudutour/github-tag-action@v6.1
