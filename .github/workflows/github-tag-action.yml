@@ -4,22 +4,20 @@ on:
     branches:
       - 'main'
 jobs:
-  build:
+  bump-version:
+    name: 'Bump Version on master'
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.sha }}
-          # fetch-depth: '0'
+          ref: ${{ github.ref }}
       - name:  'Automated Version Bump'
         uses:  'phips28/gh-action-bump-version@master'
+        with:
+          tag-prefix:  'v'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          # target-branch: 'main'
-          tag-prefix:  'v'
       # - name: Get package version
       #   run: |
       #     PACKAGE_VERSION=$(node -p "require('./package.json').version")
