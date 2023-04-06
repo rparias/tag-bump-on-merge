@@ -33,14 +33,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           CUSTOM_TAG: "$PACKAGE_VERSION"
-      # - name: Bump version and push tag
-      #   id: tag_version
-      #   uses: mathieudutour/github-tag-action@v6.1
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Create a GitHub release
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     tag: ${{ steps.tag_version.outputs.new_tag }}
-      #     name: Release ${{ steps.tag_version.outputs.new_tag }}
-      #     body: ${{ steps.tag_version.outputs.changelog }}
