@@ -18,15 +18,3 @@ jobs:
           tag-prefix:  'v'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Get package version
-      #   run: |
-      #     PACKAGE_VERSION=$(node -p "require('./package.json').version")
-      #     echo "Package version is $PACKAGE_VERSION"
-      #   env:
-      #     PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
-      # - name: Bump version and push tag
-      #   uses: anothrNick/github-tag-action@1.61.0
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     WITH_V: true
-      #     CUSTOM_TAG: "$PACKAGE_VERSION"
